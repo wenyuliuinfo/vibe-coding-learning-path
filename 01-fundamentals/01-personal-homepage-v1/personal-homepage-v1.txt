@@ -1,0 +1,38 @@
+I want to create a personal homepage with a digital avatar chat area on it.
+
+[About Me]
+- Name: Eva Liu
+- One-line introduction: A solution architect learning to leverage with AI Agent to provide industrial solutions.
+- What I’m mainly working on right now: I'm currently focusing on learning AI knowledge and start some simple hands-on AI Agent projects.
+- My interests: AI trending news, traveling, reading
+- One memorable trait about me: I like to collaborate with different professionals for better AI implementation.
+
+[Who this homepage is for]
+- Main visitors: potential collaborators, colleague, interviewers.
+
+[The page must include at least]
+- Avatar
+- Name and a one-line introduction
+- A simple personal information display section
+- A digital avatar chat area where people can ask questions
+
+[What the digital avatar needs to know]
+- My profession or identity: Solution architect
+- What I’ve been doing recently: Building AI Agent related projects and learning fundamental AI knowledge.
+- Areas I’m good at or care about: Industrial AI solutions, Enterprise AI Agent implementation, AI Agent production projects.
+- The 3 questions people are most likely to ask me: 
+  1. What are you working on recently?
+  2. What is biggest strength based on past working experience?
+  3. What AI Agent projects have you done?
+
+[Style requirements]
+- I want the overall feel to be: Professional, minimal, tech-forward
+- My preferred colors: Dark blue and black
+- Should it be mobile-friendly: Yes
+- Other requirements: Use some dynamic effect in the home page, but not too fancy; the information hierarchy should be clear.
+
+Please help me generate a first-version prototype first.
+Requirements:
+1. First make sure the structure is clear and usable
+2. Don’t make it overly complex
+3. Create a previewable version first
