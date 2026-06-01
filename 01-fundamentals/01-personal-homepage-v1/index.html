@@ -10,215 +10,268 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #080c14;
+      background: #0a0e17;
       color: #e2e8f0;
       line-height: 1.6;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
-    a { color: #60a5fa; text-decoration: none; transition: color 0.2s; }
+    a { color: #60a5fa; text-decoration: none; transition: color 0.15s; }
     a:hover { color: #93c5fd; }
 
     /* ===== Layout ===== */
-    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
-    section { padding: 72px 0; }
+    .container { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 56px 0; }
 
     /* ===== Hero ===== */
     .hero {
       display: flex; flex-direction: column; align-items: center;
       text-align: center;
-      padding-top: 80px; padding-bottom: 40px;
+      padding: 80px 0 40px;
     }
     .avatar-wrapper {
       position: relative;
-      width: 120px; height: 120px;
+      width: 88px; height: 88px;
       margin-bottom: 24px;
     }
     .avatar-ring {
-      position: absolute; inset: -3px;
+      position: absolute; inset: -2px;
       border-radius: 50%;
-      background: conic-gradient(#3b82f6, #60a5fa, #3b82f6);
-      animation: spin 5s linear infinite;
-      opacity: 0.5;
+      border: 1px solid #334155;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
     .avatar-img {
       position: relative; z-index: 1;
       width: 100%; height: 100%;
       border-radius: 50%;
-      background: #1e293b;
+      background: #111827;
       display: flex; align-items: center; justify-content: center;
-      font-size: 48px;
-      border: 3px solid #080c14;
+      font-size: 28px;
+      font-weight: 600;
+      color: #93c5fd;
+      letter-spacing: 1px;
     }
     .hero h1 {
-      font-size: clamp(28px, 5vw, 42px);
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #e2e8f0 30%, #93c5fd 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: clamp(24px, 5vw, 32px);
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: #f1f5f9;
     }
     .hero .chinese-name {
       display: block;
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 400;
       color: #64748b;
-      margin-top: 6px;
-      -webkit-text-fill-color: #64748b;
-      background: none;
+      margin-top: 2px;
+    }
+    .hero .role {
+      display: block;
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #60a5fa;
+      letter-spacing: 0.3px;
     }
     .hero .tagline {
-      margin-top: 14px;
-      font-size: 16px;
+      margin-top: 12px;
+      font-size: 14px;
       color: #94a3b8;
+      max-width: 460px;
+      line-height: 1.65;
+    }
+    .hero .summary {
+      margin-top: 18px;
+      font-size: 13px;
+      color: #64748b;
       max-width: 480px;
-      line-height: 1.5;
+      line-height: 1.7;
+    }
+
+    /* ===== Section Header ===== */
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    /* ===== Bio Block ===== */
+    .bio {
+      max-width: 520px;
+      margin: 0 auto 32px;
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.75;
+      text-align: center;
     }
 
     /* ===== Info Cards ===== */
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
     }
     .info-card {
       background: #111827;
       border: 1px solid #1e293b;
-      border-radius: 12px;
-      padding: 28px 24px;
-      transition: border-color 0.25s, box-shadow 0.25s;
+      border-radius: 6px;
+      padding: 20px 20px;
+      transition: border-color 0.2s;
     }
-    .info-card:hover {
-      border-color: #3b82f6;
-      box-shadow: 0 4px 20px rgba(59,130,246,0.08);
-    }
-    .info-card .icon { font-size: 24px; margin-bottom: 12px; }
+    .info-card:hover { border-color: #334155; }
     .info-card h3 {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 600;
       color: #60a5fa;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.7px;
     }
     .info-card p {
-      font-size: 14px;
+      font-size: 13px;
       color: #94a3b8;
       line-height: 1.6;
     }
-    .section-label {
+
+    /* ===== Expertise Tags ===== */
+    .tags-row {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      justify-content: center;
+    }
+    .tag {
+      padding: 3px 10px;
+      background: #111827;
+      border: 1px solid #1e293b;
+      border-radius: 4px;
       font-size: 11px;
-      font-weight: 600;
-      color: #3b82f6;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 24px;
-      text-align: center;
+      color: #94a3b8;
+      letter-spacing: 0.3px;
     }
 
     /* ===== Chat Section ===== */
-    .chat-section { padding: 48px 24px 80px; }
+    .chat-section { padding-top: 40px; padding-bottom: 72px; }
+    .chat-cta {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .chat-cta span {
+      font-size: 13px;
+      color: #60a5fa;
+      font-weight: 500;
+    }
+    .chat-cta .arrow {
+      display: block;
+      margin-top: 4px;
+      font-size: 14px;
+      color: #3b82f6;
+      animation: bounce 1.5s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(3px); }
+    }
     .chat-card {
       background: #111827;
       border: 1px solid #1e293b;
-      border-radius: 16px;
+      border-radius: 10px;
       overflow: hidden;
-      max-width: 560px;
+      max-width: 520px;
       margin: 0 auto;
+    }
+    .chat-card:focus-within {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 1px rgba(59,130,246,0.15);
     }
     .chat-header {
       display: flex; align-items: center; gap: 10px;
-      padding: 14px 20px;
+      padding: 12px 18px;
       background: #0f172a;
       border-bottom: 1px solid #1e293b;
     }
     .chat-avatar-small {
-      width: 36px; height: 36px;
+      width: 30px; height: 30px;
       border-radius: 50%;
       background: #1e293b;
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
+      font-size: 14px;
       flex-shrink: 0;
     }
     .chat-header-info { flex: 1; }
     .chat-header-info .name {
-      font-size: 13px; font-weight: 600;
+      font-size: 13px; font-weight: 500;
     }
     .chat-header-info .status {
-      font-size: 11px; color: #22c55e;
+      font-size: 11px; color: #4ade80;
       display: flex; align-items: center; gap: 4px;
     }
     .status-dot {
-      width: 6px; height: 6px;
-      background: #22c55e;
+      width: 5px; height: 5px;
+      background: #4ade80;
       border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.3); }
     }
     .chat-messages {
-      padding: 20px;
-      min-height: 280px;
-      max-height: 420px;
+      padding: 16px 18px;
+      min-height: 220px;
+      max-height: 360px;
       overflow-y: auto;
-      display: flex; flex-direction: column; gap: 12px;
+      display: flex; flex-direction: column; gap: 10px;
     }
     .msg {
       display: flex; gap: 8px;
       max-width: 88%;
-      animation: fadeInMsg 0.25s ease-out;
+      animation: fadeInMsg 0.2s ease-out;
     }
     @keyframes fadeInMsg {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(4px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     .msg.bot { align-self: flex-start; }
     .msg.user { align-self: flex-end; flex-direction: row-reverse; }
     .msg .bubble {
-      padding: 10px 14px;
-      border-radius: 14px;
+      padding: 9px 14px;
+      border-radius: 12px;
       font-size: 13px;
-      line-height: 1.55;
+      line-height: 1.5;
     }
     .msg.bot .bubble {
       background: #1e293b;
-      border-bottom-left-radius: 4px;
+      border-bottom-left-radius: 3px;
       color: #cbd5e1;
     }
     .msg.user .bubble {
       background: #2563eb;
-      border-bottom-right-radius: 4px;
+      border-bottom-right-radius: 3px;
       color: #fff;
     }
     .msg .avatar-icon {
-      width: 28px; height: 28px;
+      width: 24px; height: 24px;
       border-radius: 50%;
       background: #1e293b;
       display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
+      font-size: 12px;
       flex-shrink: 0;
       align-self: flex-end;
     }
     .msg.user .avatar-icon { background: #3b82f6; }
     .chat-input-row {
       display: flex; gap: 8px;
-      padding: 12px 20px;
-      border-top: 1px solid #1e293b;
+      padding: 10px 18px 12px;
       background: #0f172a;
+      border-top: 1px solid #1e293b;
     }
     .chat-input-row input {
       flex: 1;
-      padding: 10px 14px;
+      padding: 9px 14px;
       background: #1e293b;
       border: 1px solid #334155;
-      border-radius: 20px;
+      border-radius: 8px;
       color: #e2e8f0;
       font-size: 13px;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.15s;
     }
     .chat-input-row input:focus { border-color: #3b82f6; }
     .chat-input-row input::placeholder { color: #64748b; }
@@ -227,27 +280,27 @@
       background: #2563eb;
       color: #fff;
       border: none;
-      border-radius: 20px;
+      border-radius: 8px;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background 0.15s;
       white-space: nowrap;
     }
     .chat-input-row button:hover { background: #1d4ed8; }
     .suggestions {
       display: flex; gap: 6px; flex-wrap: wrap;
-      padding: 0 20px 12px;
+      padding: 0 18px 8px;
     }
     .suggestion-chip {
-      padding: 5px 12px;
+      padding: 4px 11px;
       background: #1e293b;
       border: 1px solid #334155;
-      border-radius: 16px;
-      font-size: 12px;
+      border-radius: 6px;
+      font-size: 11px;
       color: #94a3b8;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s;
     }
     .suggestion-chip:hover {
       background: #2563eb;
@@ -257,7 +310,7 @@
 
     /* ===== Footer ===== */
     footer {
-      padding: 28px 0;
+      padding: 24px 0 32px;
       text-align: center;
       font-size: 12px;
       color: #475569;
@@ -266,12 +319,16 @@
 
     /* ===== Mobile ===== */
     @media (max-width: 600px) {
-      .hero { padding-top: 56px; }
-      .hero h1 { font-size: 26px; }
-      .chat-messages { min-height: 240px; max-height: 340px; }
+      .hero { padding: 48px 0 32px; }
+      .hero h1 { font-size: 22px; }
+      .hero .tagline, .hero .summary { font-size: 13px; }
+      .avatar-wrapper { width: 72px; height: 72px; margin-bottom: 20px; }
+      .avatar-img { font-size: 22px; }
+      .bio { font-size: 13px; }
+      .chat-messages { min-height: 180px; max-height: 280px; }
       .cards-grid { grid-template-columns: 1fr; }
-      .suggestions { padding: 0 14px 10px; }
-      section { padding: 48px 0; }
+      .info-card { padding: 16px 16px; }
+      section { padding: 40px 0; }
     }
   </style>
 </head>
@@ -283,52 +340,78 @@
     <section class="hero">
       <div class="avatar-wrapper">
         <div class="avatar-ring"></div>
-        <div class="avatar-img">👩‍💻</div>
+        <div class="avatar-img">EL</div>
       </div>
       <h1>Eva Liu <span class="chinese-name">刘雯钰</span></h1>
+      <span class="role">Solution Architect</span>
       <p class="tagline">
-        A solution architect learning to leverage with AI Agent to provide industrial solutions.
+        Bridging industrial needs with AI Agent technology to deliver practical, production-ready solutions.
+      </p>
+      <p class="summary">
+        Currently deepening expertise in AI Agent frameworks and enterprise implementation —
+        building hands-on projects, collaborating across disciplines, and exploring how
+        intelligent agents can transform industrial workflows.
       </p>
     </section>
 
-    <!-- ===== Personal Info ===== -->
+    <!-- ===== About ===== -->
     <section>
-      <p class="section-label">About Me</p>
+      <p class="section-label">About</p>
+      <p class="bio">
+        I'm a solution architect with a focus on industrial AI and enterprise agent systems.
+        I work at the intersection of business requirements and technical architecture,
+        translating complex needs into scalable, AI-driven solutions. I believe the best
+        implementations come from cross-discipline collaboration.
+      </p>
+
       <div class="cards-grid">
         <div class="info-card">
-          <div class="icon">🎯</div>
           <h3>Current Focus</h3>
-          <p>Learning AI knowledge and building hands-on AI Agent projects to deepen practical understanding.</p>
+          <p>Learning foundational AI knowledge and building hands-on AI Agent projects, with an emphasis on production deployment patterns.</p>
         </div>
         <div class="info-card">
-          <div class="icon">💡</div>
+          <h3>Expertise</h3>
+          <p>Solution architecture, industrial AI systems, enterprise AI Agent implementation, and bridging business needs with technical design.</p>
+        </div>
+        <div class="info-card">
           <h3>Interests</h3>
-          <p>AI trending news, traveling, and reading — always exploring the intersection of technology and everyday life.</p>
+          <p>AI trending news, traveling, and reading — always exploring how real-world experiences spark better tech solutions.</p>
         </div>
         <div class="info-card">
-          <div class="icon">🤝</div>
           <h3>Work Style</h3>
-          <p>I enjoy collaborating with professionals from different disciplines to deliver better AI implementations.</p>
+          <p>Cross-discipline collaborator who partners with domain experts, engineers, and stakeholders to deliver practical AI implementations.</p>
         </div>
+      </div>
+
+      <div class="tags-row">
+        <span class="tag">Industrial AI</span>
+        <span class="tag">Enterprise Agents</span>
+        <span class="tag">Solution Architecture</span>
+        <span class="tag">AI Production</span>
+        <span class="tag">Cross-team Collaboration</span>
       </div>
     </section>
 
-    <!-- ===== Digital Avatar Chat ===== -->
+    <!-- ===== Chat ===== -->
     <section class="chat-section">
-      <p class="section-label">Chat with My Digital Avatar</p>
+      <p class="section-label">Ask Me Anything</p>
+      <div class="chat-cta">
+        <span>Have a question? Ask my digital avatar below</span>
+        <span class="arrow">↓</span>
+      </div>
       <div class="chat-card">
         <div class="chat-header">
-          <div class="chat-avatar-small">👩‍💻</div>
+          <div class="chat-avatar-small">EL</div>
           <div class="chat-header-info">
             <div class="name">Eva's Digital Avatar</div>
-            <div class="status"><span class="status-dot"></span> Online</div>
+            <div class="status"><span class="status-dot"></span> Available to chat</div>
           </div>
         </div>
         <div class="chat-messages" id="chatMessages">
           <div class="msg bot">
-            <div class="avatar-icon">🤖</div>
+            <div class="avatar-icon">EL</div>
             <div class="bubble">
-              Hi there! 👋 I'm Eva's digital avatar. Feel free to ask me about her work, projects, or background!
+              Hi! I'm Eva's digital avatar. Ask me about her work, projects, or background — I'm here to help.
             </div>
           </div>
         </div>
@@ -356,7 +439,6 @@
       const sendBtn = document.getElementById('chatSend');
       const suggestionsContainer = document.getElementById('suggestions');
 
-      // ===== Knowledge Base =====
       const knowledge = [
         {
           keywords: ['recent', 'working', 'doing', 'currently', 'now', 'focus'],
@@ -368,7 +450,7 @@
         },
         {
           keywords: ['project', 'done', 'built', 'agent project', 'portfolio', 'created'],
-          reply: "I'm currently working on several early-stage AI Agent projects — including a personal homepage with a digital avatar chat area (this one!). I'm exploring multi-agent collaboration patterns and production-grade deployment strategies for enterprise environments."
+          reply: "I'm currently working on several early-stage AI Agent projects — including a personal homepage with a digital avatar chat area. I'm exploring multi-agent collaboration patterns and production-grade deployment strategies for enterprise environments."
         },
         {
           keywords: ['who', 'identity', 'profession', 'job', 'role', 'background'],
@@ -388,7 +470,7 @@
         },
         {
           keywords: ['hello', 'hi', 'hey', 'greet'],
-          reply: "Hi there! 👋 I'm Eva's digital avatar. Ask me about her work, recent projects, or professional background — I'm happy to chat!"
+          reply: "Hi there! I'm Eva's digital avatar. Ask me about her work, recent projects, or professional background — I'm happy to chat!"
         }
       ];
 
@@ -407,7 +489,7 @@
       function appendMessage(text, sender) {
         const div = document.createElement('div');
         div.className = 'msg ' + sender;
-        const icon = sender === 'bot' ? '🤖' : '👤';
+        const icon = sender === 'bot' ? 'EL' : '👤';
         div.innerHTML = '<div class="avatar-icon">' + icon + '</div><div class="bubble">' + escapeHTML(text) + '</div>';
         messages.appendChild(div);
         messages.scrollTop = messages.scrollHeight;
@@ -424,17 +506,17 @@
         if (!q) return;
         appendMessage(q, 'user');
         input.value = '';
-        setTimeout(() => {
+        setTimeout(function() {
           appendMessage(findReply(q), 'bot');
         }, 600 + Math.random() * 400);
       }
 
-      sendBtn.addEventListener('click', () => handleSend(input.value));
-      input.addEventListener('keydown', e => {
+      sendBtn.addEventListener('click', function() { handleSend(input.value); });
+      input.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') handleSend(input.value);
       });
 
-      suggestionsContainer.addEventListener('click', e => {
+      suggestionsContainer.addEventListener('click', function(e) {
         const chip = e.target.closest('.suggestion-chip');
         if (!chip) return;
         const q = chip.dataset.q;

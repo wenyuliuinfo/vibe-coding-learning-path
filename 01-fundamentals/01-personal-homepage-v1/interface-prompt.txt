@@ -1,0 +1,12 @@
+The main problems with the current page are: It did not show enough information about me.
+
+I want it to feel like this after the changes: More information, and looks more professional, and change the home page avatar.
+
+This time, please only modify these parts: index.html
+For now, do not change these parts: AGENTS.md
+
+Also, please keep these basic usability requirements in mind:
+- The hero section should make it immediately clear who I am
+- The chat entry point should be more obvious
+- Text should be readable on mobile
+- Do not make the page look more cluttered
