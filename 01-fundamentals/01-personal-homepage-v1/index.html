@@ -158,15 +158,15 @@
       margin-bottom: 20px;
     }
     .chat-cta span {
-      font-size: 13px;
-      color: #60a5fa;
+      font-size: 14px;
+      color: #93c5fd;
       font-weight: 500;
     }
     .chat-cta .arrow {
       display: block;
-      margin-top: 4px;
-      font-size: 14px;
-      color: #3b82f6;
+      margin-top: 2px;
+      font-size: 16px;
+      color: #60a5fa;
       animation: bounce 1.5s infinite;
     }
     @keyframes bounce {
@@ -176,6 +176,7 @@
     .chat-card {
       background: #111827;
       border: 1px solid #1e293b;
+      border-top: 2px solid #1e3a5f;
       border-radius: 10px;
       overflow: hidden;
       max-width: 520px;
@@ -308,6 +309,44 @@
       color: #fff;
     }
 
+    /* ===== Link Cards ===== */
+    .link-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+    }
+    .link-card {
+      background: #111827;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 18px 20px;
+      display: flex; align-items: center; gap: 12px;
+      transition: border-color 0.15s;
+    }
+    .link-card:hover { border-color: #334155; }
+    .link-card .lc-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: #1e293b;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .link-card .lc-text { flex: 1; min-width: 0; }
+    .link-card .lc-label {
+      font-size: 11px;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 2px;
+    }
+    .link-card .lc-value {
+      font-size: 13px;
+      color: #94a3b8;
+      word-break: break-all;
+    }
+    .link-card a.lc-value { color: #60a5fa; }
+    .link-card a.lc-value:hover { color: #93c5fd; }
     /* ===== Footer ===== */
     footer {
       padding: 24px 0 32px;
@@ -389,6 +428,42 @@
         <span class="tag">Solution Architecture</span>
         <span class="tag">AI Production</span>
         <span class="tag">Cross-team Collaboration</span>
+      </div>
+    </section>
+
+
+    <!-- ===== Portfolio ===== -->
+    <section>
+      <p class="section-label">Portfolio</p>
+      <div class="link-cards">
+        <a class="link-card" href="https://github.com/wenyuliuinfo" target="_blank" rel="noopener">
+          <span class="lc-icon">📂</span>
+          <span class="lc-text">
+            <span class="lc-label">GitHub</span>
+            <span class="lc-value">github.com/wenyuliuinfo</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section>
+      <p class="section-label">Contact</p>
+      <div class="link-cards">
+        <div class="link-card">
+          <span class="lc-icon">✉️</span>
+          <span class="lc-text">
+            <span class="lc-label">Email</span>
+            <a class="lc-value" href="mailto:wenyuliuemail@163.com">wenyuliuemail@163.com</a>
+          </span>
+        </div>
+        <div class="link-card">
+          <span class="lc-icon">📍</span>
+          <span class="lc-text">
+            <span class="lc-label">Location</span>
+            <span class="lc-value">Shanghai, China</span>
+          </span>
+        </div>
       </div>
     </section>
 
