@@ -486,7 +486,7 @@
           <div class="msg bot">
             <div class="avatar-icon">EL</div>
             <div class="bubble">
-              Hi! I'm Eva's digital avatar. Ask me about her work, projects, or background — I'm here to help.
+              Hello, I'm Eva's digital avatar. I can tell you about her work, background, and how to reach her. What would you like to know?
             </div>
           </div>
         </div>
@@ -514,51 +514,72 @@
       const sendBtn = document.getElementById('chatSend');
       const suggestionsContainer = document.getElementById('suggestions');
 
+      // ===== Knowledge Base =====
       const knowledge = [
         {
-          keywords: ['recent', 'working', 'doing', 'currently', 'now', 'focus'],
-          reply: "Right now I'm learning fundamental AI knowledge and building hands-on AI Agent projects. I'm especially interested in how AI Agents can power industrial solutions and enterprise workflows."
+          keywords: ['hello', 'hi', 'hey', 'greet'],
+          reply: "Hello, I'm Eva's digital avatar. I can tell you about her work, background, and how to reach her. What would you like to know?"
         },
         {
-          keywords: ['strength', 'strong', 'best at', 'good at', 'skill', 'expertise', 'experience'],
-          reply: "My biggest strength is bridging business requirements with technical architecture. With years of experience as a solution architect, I can translate complex industrial needs into practical, scalable AI-driven systems — and I love collaborating across disciplines to make that happen."
+          keywords: ['who', 'identity', 'profession', 'job', 'role', 'background', 'about you', 'about eva', 'introduce'],
+          reply: "Eva Liu is a solution architect who focuses on using AI Agents to deliver industrial solutions. She works at the intersection of business needs and technical design, translating complex requirements into practical, AI-driven systems."
         },
         {
-          keywords: ['project', 'done', 'built', 'agent project', 'portfolio', 'created'],
-          reply: "I'm currently working on several early-stage AI Agent projects — including a personal homepage with a digital avatar chat area. I'm exploring multi-agent collaboration patterns and production-grade deployment strategies for enterprise environments."
+          keywords: ['recent', 'working', 'doing', 'currently', 'now', 'focus', 'lately'],
+          reply: "Recently, Eva has been focusing on learning AI fundamental knowledge and starting to build some AI Agent projects. She's especially interested in how AI Agents can power industrial solutions and enterprise workflows."
         },
         {
-          keywords: ['who', 'identity', 'profession', 'job', 'role', 'background'],
-          reply: "I'm a Solution Architect with a passion for AI Agents. I help design and deliver industrial AI solutions, and I'm currently deepening my expertise in AI Agent frameworks and production implementations."
+          keywords: ['strength', 'strong', 'best at', 'good at', 'skill', 'expertise', 'experience', 'specialize'],
+          reply: "Eva's biggest strength is bridging business requirements with technical architecture. With years of experience as a solution architect, she can translate complex industrial needs into practical, scalable AI-driven systems. She's particularly good at finding solutions for different industrial use cases — and she values collaborating across different functions to make that happen."
+        },
+        {
+          keywords: ['project', 'done', 'built', 'agent project', 'portfolio', 'created', 'before'],
+          reply: "Eva is currently working on early-stage AI Agent projects, including this personal homepage with a digital avatar chat. She's exploring multi-agent collaboration patterns and how to bring AI Agents into production environments. You can see more of her work on GitHub at github.com/wenyuliuinfo."
+        },
+        {
+          keywords: ['contact', 'reach', 'email', 'mail', 'location', 'where', 'find you', 'how to'],
+          reply: "You can reach Eva at wenyuliuemail@163.com. She's based in Shanghai, China. Her GitHub is github.com/wenyuliuinfo."
+        },
+        {
+          keywords: ['industrial', 'enterprise', 'industry', 'manufacturing', 'solution', 'use case'],
+          reply: "Eva focuses on industrial AI solutions — areas like manufacturing intelligence, predictive maintenance, and intelligent automation. She's working on bringing AI Agents into production environments where they can deliver real business impact."
         },
         {
           keywords: ['interest', 'hobby', 'hobbies', 'like', 'travel', 'read', 'news'],
-          reply: "I stay on top of AI trending news, love traveling to new places, and always have a book going. I find that real-world exploration often sparks the best ideas for tech solutions!"
+          reply: "Eva keeps up with AI trending news, enjoys traveling, and reads regularly. She finds that exploring different perspectives often leads to better technical solutions."
         },
         {
           keywords: ['collaborat', 'team', 'together', 'work with', 'partner'],
-          reply: "Collaboration is at the heart of how I work. I regularly partner with domain experts, engineers, and business stakeholders to ensure AI solutions are not only technically sound but also practically valuable."
-        },
-        {
-          keywords: ['industrial', 'enterprise', 'industry', 'manufacturing', 'solution architect'],
-          reply: "I specialize in industrial and enterprise AI solutions — think manufacturing intelligence, predictive maintenance, and intelligent automation. I'm focused on bringing AI Agents into production environments where they can deliver real business impact."
-        },
-        {
-          keywords: ['hello', 'hi', 'hey', 'greet'],
-          reply: "Hi there! I'm Eva's digital avatar. Ask me about her work, recent projects, or professional background — I'm happy to chat!"
+          reply: "Eva regularly partners with domain experts, engineers, and business stakeholders. She believes the best AI implementations come from cross-discipline collaboration."
         }
       ];
 
-      const fallback = "Thanks for asking! I'm still learning, but Eva would be happy to discuss this with you directly. Feel free to reach out to her for a deeper conversation!";
+      const boundaryReply = "I don't have enough information to answer that accurately. For a more detailed conversation, feel free to reach Eva directly at wenyuliuemail@163.com or check her GitHub at github.com/wenyuliuinfo.";
 
       function findReply(text) {
         const lower = text.toLowerCase();
-        const scored = knowledge.map(entry => {
-          const matched = entry.keywords.filter(kw => lower.includes(kw));
-          return { entry, score: matched.length };
-        });
-        const best = scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score)[0];
-        return best ? best.entry.reply : fallback;
+        var bestScore = 0;
+        var bestReply = boundaryReply;
+
+        for (var i = 0; i < knowledge.length; i++) {
+          var entry = knowledge[i];
+          var score = 0;
+          for (var j = 0; j < entry.keywords.length; j++) {
+            if (lower.indexOf(entry.keywords[j]) !== -1) {
+              score++;
+            }
+          }
+          if (score > bestScore) {
+            bestScore = score;
+            bestReply = entry.reply;
+          }
+        }
+
+        // Require at least 2 keyword matches for confidence; single match only for greeting
+        if (bestScore >= 2 || (bestScore === 1 && lower.length < 15)) {
+          return bestReply;
+        }
+        return boundaryReply;
       }
 
       function appendMessage(text, sender) {
