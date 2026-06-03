@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eva Liu — Solution Architect</title>
+<style>
+
+/* ============================================
+   DESIGN TOKENS
+   ============================================ */
+:root {
+  --color-bg: #F8FAFC;
+  --color-bg-alt: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-surface-glass: rgba(255, 255, 255, 0.82);
+  --color-inverted: #0F172A;
+  --color-inverted-surface: #1E293B;
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #94A3B8;
+  --color-text-inverted: #FFFFFF;
+  --color-text-inverted-muted: rgba(255, 255, 255, 0.75);
+  --color-border: #E2E8F0;
+  --color-border-light: #F1F5F9;
+  --color-accent: #0052FF;
+  --color-accent-secondary: #4D7CFF;
+  --color-accent-light: rgba(0, 82, 255, 0.08);
+  --gradient-accent: linear-gradient(135deg, #0052FF 0%, #4D7CFF 100%);
+  --gradient-accent-horizontal: linear-gradient(90deg, #0052FF 0%, #4D7CFF 100%);
+  --gradient-text: linear-gradient(135deg, #0052FF 20%, #4D7CFF 100%);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-accent: 0 4px 16px rgba(0, 82, 255, 0.25);
+  --shadow-accent-lg: 0 8px 32px rgba(0, 82, 255, 0.3);
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: Georgia, 'Times New Roman', serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-normal: 1.6;
+  --space-section: clamp(4rem, 8vw, 7rem);
+  --space-container: clamp(1rem, 5vw, 2rem);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-entrance: 700ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--leading-normal);
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  overflow-x: hidden;
+}
+.container { width: 100%; max-width: 860px; margin: 0 auto; padding: 0 var(--space-container); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0; }
+
+.gradient-text { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.glass { background: var(--color-surface-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.6); }
+
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rotate360 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.25); opacity: 0.7; } }
+@keyframes pulseSubtle { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.15); opacity: 1; } }
+@keyframes orbit { from { transform: rotate(0deg) translateX(140px) rotate(0deg); } to { transform: rotate(360deg) translateX(140px) rotate(-360deg); } }
+.animate-fade-in-up { animation: fadeInUp var(--duration-entrance) var(--ease-out) both; }
+.animate-fade-in { animation: fadeIn var(--duration-entrance) var(--ease-out) both; }
+.stagger-1 { animation-delay: 0.1s; } .stagger-2 { animation-delay: 0.2s; } .stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; } .stagger-5 { animation-delay: 0.5s; } .stagger-6 { animation-delay: 0.6s; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.75rem;
+  font-family: var(--font-sans); font-size: var(--font-size-base); font-weight: 600; line-height: 1;
+  border: none; border-radius: var(--radius-full); cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out); text-decoration: none; white-space: nowrap; min-height: 48px; }
+.btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: var(--gradient-accent); color: #FFF; box-shadow: var(--shadow-accent); }
+.btn-primary:hover { box-shadow: var(--shadow-accent-lg); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0) scale(0.98); }
+.btn-secondary { background: var(--color-surface); color: var(--color-text-primary); border: 1px solid var(--color-border); box-shadow: var(--shadow-sm); }
+.btn-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); box-shadow: var(--shadow-md); }
+
+.card { flex: 1; min-width: 0; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg);
+  padding: 1.75rem; box-shadow: var(--shadow-sm); transition: all var(--duration-slow) var(--ease-out); }
+.card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.card-featured { border: 2px solid transparent;
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box, var(--gradient-accent) border-box;
+  box-shadow: var(--shadow-md), var(--shadow-accent); }
+.card-icon { width: 48px; height: 48px; border-radius: var(--radius-md); background: var(--gradient-accent);
+  display: flex; align-items: center; justify-content: center; color: #FFF; margin-bottom: 1rem; box-shadow: var(--shadow-accent); }
+.card-icon svg { width: 20px; height: 20px; }
+.card-title { font-family: var(--font-display); font-size: var(--font-size-xl); letter-spacing: -0.01em; margin-bottom: 0.5rem; }
+.card-desc { font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: var(--leading-normal); }
+
+.badge { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 1rem;
+  font-size: var(--font-size-sm); font-weight: 500; border-radius: var(--radius-full); }
+.badge-accent { background: var(--color-accent-light); color: var(--color-accent); border: 1px solid rgba(0,82,255,0.15); }
+.pulse-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--color-accent); animation: pulse 2s infinite; }
+.pulse-dot-subtle { width: 6px; height: 6px; animation: pulseSubtle 3s infinite; }
+
+.section { padding: var(--space-section) 0; }
+.section-inverted { background: var(--color-inverted); color: var(--color-text-inverted); }
+.section-label { display: inline-block; font-size: var(--font-size-xs); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-accent); margin-bottom: 0.75rem; }
+.section-inverted .section-label { color: #60A5FA; }
+.section-title { font-family: var(--font-display); font-size: clamp(1.75rem, 4vw, 3rem);
+  line-height: var(--leading-tight); letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+.section-subtitle { font-size: var(--font-size-lg); color: var(--color-text-secondary); max-width: 540px; margin: 0 auto; }
+.section-inverted .section-subtitle { color: var(--color-text-inverted-muted); }
+.section-header { text-align: center; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+
+.hero { padding: clamp(4rem, 10vw, 7rem) 0 clamp(3rem, 8vw, 5rem); position: relative; overflow: hidden;
+  background: radial-gradient(ellipse 80% 60% at 30% -10%, rgba(0,82,255,0.06) 0%, transparent 60%), var(--color-bg); }
+.hero-content { position: relative; z-index: 2; }
+.hero-badge-wrap { margin-bottom: 1rem; }
+.hero-name { font-family: var(--font-display); font-size: clamp(2.75rem, 7vw, 5.25rem);
+  line-height: var(--leading-tight); letter-spacing: -0.02em; margin-bottom: 0.25rem; }
+.hero-name-cn { font-family: var(--font-sans); font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 400;
+  color: var(--color-text-secondary); margin-bottom: 1.25rem; letter-spacing: 0.04em; }
+.hero-tagline { font-size: clamp(1rem, 2vw, 1.25rem); color: var(--color-text-secondary); max-width: 520px; line-height: var(--leading-snug); margin-bottom: 2rem; }
+.hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.hero-decoration { position: absolute; top: 50%; right: -120px; transform: translateY(-50%);
+  width: 400px; height: 400px; border-radius: 50%; border: 1px solid rgba(0,82,255,0.06); pointer-events: none; z-index: 1; animation: rotate360 60s linear infinite; }
+.hero-decoration::before { content: ''; position: absolute; inset: 30px; border-radius: 50%; border: 1px solid rgba(0,82,255,0.08); }
+.hero-decoration::after { content: ''; position: absolute; inset: 60px; border-radius: 50%; border: 1.5px solid rgba(0,82,255,0.1); }
+.hero-orb { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent); opacity: 0.4;
+  animation: orbit 12s linear infinite; pointer-events: none; z-index: 1; top: 50%; left: 50%; box-shadow: 0 0 12px rgba(0,82,255,0.3); }
+.hero-orb:nth-child(2) { animation-duration: 18s; animation-delay: -6s; width: 6px; height: 6px; opacity: 0.3; }
+.dot-grid { position: absolute; right: 6%; top: 20%; display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; opacity: 0.1; pointer-events: none; z-index: 0; }
+.dot-grid span { width: 4px; height: 4px; border-radius: 50%; background: var(--color-accent); }
+
+.stats-bar { display: flex; justify-content: center; gap: clamp(1.5rem, 5vw, 4rem); padding: 2rem 0;
+  border-top: 1px solid var(--color-border-light); border-bottom: 1px solid var(--color-border-light); flex-wrap: wrap; }
+.stat-item { text-align: center; min-width: 100px; }
+.stat-value { font-family: var(--font-mono); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 600;
+  background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.stat-label { font-size: var(--font-size-sm); color: var(--color-text-tertiary); margin-top: 0.25rem; }
+
+.quote-section { text-align: center; max-width: 680px; margin: 0 auto; position: relative; }
+.quote-mark { font-family: var(--font-display); font-size: 120px; line-height: 0.7;
+  background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  opacity: 0.3; position: absolute; top: -30px; left: 50%; transform: translateX(-50%); }
+.quote-text { font-family: var(--font-display); font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  line-height: var(--leading-snug); letter-spacing: -0.02em; position: relative; z-index: 1; margin-top: 1rem; }
+
+.chat-container { max-width: 620px; margin: 0 auto; background: var(--color-surface);
+  border: 1px solid var(--color-border); border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+.chat-header { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-border-light); background: var(--color-surface-glass);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.chat-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--gradient-accent);
+  display: flex; align-items: center; justify-content: center; font-family: var(--font-display);
+  font-size: 1rem; color: #FFF; flex-shrink: 0; }
+.chat-header-info { flex: 1; }
+.chat-header-name { font-weight: 600; font-size: var(--font-size-sm); }
+.chat-header-status { font-size: var(--font-size-xs); color: var(--color-accent); display: flex; align-items: center; gap: 0.35rem; }
+.chat-messages { padding: 1.25rem; min-height: 280px; max-height: 400px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 1rem; background: var(--color-bg); scroll-behavior: smooth; }
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
+.msg { display: flex; gap: 0.5rem; animation: fadeInUp 0.4s var(--ease-out) both; max-width: 90%; }
+.msg-bot { align-self: flex-start; }
+.msg-user { align-self: flex-end; flex-direction: row-reverse; }
+.msg-avatar-mini { width: 28px; height: 28px; border-radius: 50%; background: var(--gradient-accent);
+  display: flex; align-items: center; justify-content: center; font-size: 0.65rem;
+  font-family: var(--font-display); color: #FFF; flex-shrink: 0; }
+.msg-bubble { padding: 0.65rem 1rem; border-radius: var(--radius-lg); font-size: var(--font-size-sm); line-height: var(--leading-snug); }
+.msg-bot .msg-bubble { background: var(--color-surface); border: 1px solid var(--color-border-light); border-bottom-left-radius: var(--radius-sm); }
+.msg-user .msg-bubble { background: var(--gradient-accent); color: #FFF; border-bottom-right-radius: var(--radius-sm); }
+.msg-typing { display: flex; gap: 4px; padding: 0.35rem 0; }
+.msg-typing span { width: 5px; height: 5px; border-radius: 50%; background: var(--color-text-tertiary); animation: pulseSubtle 1.4s infinite; }
+.msg-typing span:nth-child(2) { animation-delay: 0.2s; }
+.msg-typing span:nth-child(3) { animation-delay: 0.4s; }
+.chat-input-wrap { display: flex; gap: 0.5rem; padding: 0.75rem 1rem;
+  border-top: 1px solid var(--color-border-light); background: var(--color-surface); }
+.chat-input { flex: 1; padding: 0.65rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-full);
+  font-family: var(--font-sans); font-size: var(--font-size-sm); outline: none;
+  transition: border-color var(--duration-normal) var(--ease-out); background: var(--color-bg); }
+.chat-input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px var(--color-accent-light); }
+.chat-send { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--gradient-accent);
+  color: #FFF; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all var(--duration-normal) var(--ease-out); box-shadow: var(--shadow-accent); }
+.chat-send:hover { box-shadow: var(--shadow-accent-lg); transform: scale(1.05); }
+.chat-send:active { transform: scale(0.95); }
+.chat-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.5rem 1rem 0.75rem; }
+.chip { padding: 0.4rem 0.85rem; border-radius: var(--radius-full); font-size: var(--font-size-xs); font-weight: 500;
+  border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text-secondary);
+  cursor: pointer; transition: all var(--duration-fast) var(--ease-out); white-space: nowrap; }
+.chip:hover { border-color: var(--color-accent); color: var(--color-accent); background: var(--color-accent-light); }
+
+.footer { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--color-inverted); color: var(--color-text-inverted); }
+.footer-title { text-align: center; font-family: var(--font-display); font-size: clamp(1.75rem, 4vw, 2.75rem); margin-bottom: 0.75rem; }
+.footer-text { text-align: left; color: var(--color-text-inverted-muted); margin-bottom: 2rem; font-size: var(--font-size-lg); }
+.footer-contact { display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem; margin-bottom: 1.5rem; }
+.footer-contact-item { display: flex; align-items: center; gap: 0.6rem; font-size: var(--font-size-sm); color: var(--color-text-inverted-muted); }
+.footer-contact-item svg { flex-shrink: 0; opacity: 0.6; }
+.footer-contact-item a { color: #60A5FA; text-decoration: none; transition: color var(--duration-fast) var(--ease-out); }
+.footer-contact-item a:hover { color: var(--color-accent-secondary); text-decoration: underline; }
+.footer-bottom { text-align: left; font-size: var(--font-size-sm); color: var(--color-text-inverted-muted);
+  border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 1.5rem; }
+.cards-grid { display: flex; flex-direction: row; gap: 1.5rem; }
+
+@media (max-width: 768px) {
+  .hero-decoration, .dot-grid, .hero-orb { display: none; }
+  .hero-actions { flex-direction: column; width: 100%; max-width: 320px; }
+  .hero-actions .btn { width: 100%; }
+  .stats-bar { gap: 1.5rem; }
+  .cards-grid { flex-direction: column; }
+  .quote-mark { font-size: 80px; top: -20px; }
+  .chat-messages { max-height: 320px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="dot-grid">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+  <div class="hero-decoration"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-orb"></div>
+  <div class="container hero-content">
+    <div class="hero-badge-wrap animate-fade-in-up">
+      <span class="badge badge-accent">
+        <span class="pulse-dot"></span> Available for collaboration
+      </span>
+    </div>
+    <h1 class="hero-name animate-fade-in-up stagger-1">
+      <span class="gradient-text">Eva Liu</span>
+    </h1>
+    <p class="hero-name-cn animate-fade-in-up stagger-2">刘雯钰</p>
+    <p class="hero-tagline animate-fade-in-up stagger-3">
+      A solution architect learning to leverage AI Agents to provide industrial solutions.
+    </p>
+    <div class="hero-actions animate-fade-in-up stagger-4">
+      <a href="#chat" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Chat with Digital Avatar
+      </a>
+      <a href="#about" class="btn btn-secondary">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="container">
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-value">5<span style="font-size:0.65em;color:var(--color-accent)">+</span></div><div class="stat-label">Years Experience</div></div>
+    <div class="stat-item"><div class="stat-value">10<span style="font-size:0.65em;color:var(--color-accent)">+</span></div><div class="stat-label">Enterprise Projects</div></div>
+    <div class="stat-item"><div class="stat-value">5<span style="font-size:0.65em;color:var(--color-accent)">+</span></div><div class="stat-label">AI Agent PoCs</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-header animate-fade-in-up">
+      <span class="section-label">About Me</span>
+      <h2 class="section-title">Bridging Business &amp; AI</h2>
+      <p class="section-subtitle">A solution architect focused on translating complex industrial needs into practical, scalable AI-driven systems.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="card card-featured animate-fade-in-up stagger-1">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h3 class="card-title">Current Focus</h3>
+        <p class="card-desc">Learning AI fundamentals and building hands-on AI Agent projects. Exploring how agents can power industrial solutions and enterprise workflows.</p>
+      </div>
+      <div class="card animate-fade-in-up stagger-2">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3 class="card-title">Core Strength</h3>
+        <p class="card-desc">Finding solutions for diverse industrial use cases. Years of experience bridging business requirements with technical architecture.</p>
+      </div>
+      <div class="card animate-fade-in-up stagger-3">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3 class="card-title">Work Style</h3>
+        <p class="card-desc">Cross-discipline collaboration for better AI implementation. I bring together professionals across functions to deliver real impact.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERESTS -->
+<section class="section section-inverted">
+  <div class="container">
+    <div class="section-header animate-fade-in-up">
+      <span class="section-label">Beyond Work</span>
+      <h2 class="section-title">What Drives Me</h2>
+      <p class="section-subtitle">Curiosity fuels everything I do — both in technology and in life.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="card glass animate-fade-in-up stagger-1" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">
+        <div class="card-icon" style="background:rgba(96,165,250,0.2);box-shadow:none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <h3 class="card-title" style="color:var(--color-text-inverted);">AI Trending News</h3>
+        <p class="card-desc" style="color:var(--color-text-inverted-muted);">Keeping up with the fast-moving AI landscape. From foundation models to agent architectures, I stay plugged in.</p>
+      </div>
+      <div class="card glass animate-fade-in-up stagger-2" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">
+        <div class="card-icon" style="background:rgba(96,165,250,0.2);box-shadow:none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        </div>
+        <h3 class="card-title" style="color:var(--color-text-inverted);">Traveling</h3>
+        <p class="card-desc" style="color:var(--color-text-inverted-muted);">Exploring new places broadens perspective. Every journey is a chance to see problems — and solutions — differently.</p>
+      </div>
+      <div class="card glass animate-fade-in-up stagger-3" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">
+        <div class="card-icon" style="background:rgba(96,165,250,0.2);box-shadow:none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3 class="card-title" style="color:var(--color-text-inverted);">Reading</h3>
+        <p class="card-desc" style="color:var(--color-text-inverted-muted);">Books on systems thinking, technology strategy, and the occasional sci-fi novel. Always learning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="section">
+  <div class="container">
+    <div class="quote-section animate-fade-in-up">
+      <div class="quote-mark">&ldquo;</div>
+      <p class="quote-text">I believe the best AI solutions come from <span class="gradient-text">deep collaboration</span> — where domain expertise meets technical architecture.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CHAT -->
+<section class="section" id="chat" style="background:var(--color-bg-alt);">
+  <div class="container">
+    <div class="section-header animate-fade-in-up">
+      <span class="section-label">Digital Avatar</span>
+      <h2 class="section-title">Ask Me Anything</h2>
+      <p class="section-subtitle">Chat with my digital avatar to learn more about my work, experience, and approach.</p>
+    </div>
+    <div class="chat-container animate-fade-in-up stagger-1">
+      <div class="chat-header">
+        <div class="chat-avatar">E</div>
+        <div class="chat-header-info">
+          <div class="chat-header-name">Eva Liu</div>
+          <div class="chat-header-status"><span class="pulse-dot pulse-dot-subtle"></span> Online</div>
+        </div>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="msg msg-bot">
+          <div class="msg-avatar-mini">E</div>
+          <div class="msg-bubble">Hi! I'm Eva's digital avatar. Feel free to ask me anything about her work, experience, or interests. Try one of the suggestions below or type your own question.</div>
+        </div>
+      </div>
+      <div class="chat-chips" id="chatChips">
+        <button class="chip" data-question="What are you working on recently?">What are you working on?</button>
+        <button class="chip" data-question="What is your biggest strength based on past work experience?">Biggest strength?</button>
+        <button class="chip" data-question="What AI Agent projects have you done?">AI Agent projects?</button>
+      </div>
+      <div class="chat-input-wrap">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Ask a question..." autocomplete="off">
+        <button class="chat-send" id="chatSend" aria-label="Send message">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <h2 class="footer-title"><span class="gradient-text">Get in Touch</span></h2>
+    <p class="footer-text">Interested in AI-powered industrial solutions? Reach out — I'm always open to meaningful conversations.</p>
+    <div class="footer-contact">
+      <div class="footer-contact-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Shanghai, China
+      </div>
+      <div class="footer-contact-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:wenyuliuemail@163.com">wenyuliuemail@163.com</a>
+      </div>
+      <div class="footer-contact-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        <a href="https://github.com/wenyuliuinfo" target="_blank" rel="noopener">github.com/wenyuliuinfo</a>
+      </div>
+    </div>
+    <p class="footer-bottom">&copy; 2026 Eva Liu. Crafted with purpose.</p>
+  </div>
+</footer>
+
+
+<script>
+(function() {
+  var messagesEl = document.getElementById('chatMessages');
+  var inputEl = document.getElementById('chatInput');
+  var sendBtn = document.getElementById('chatSend');
+  var chipsEl = document.getElementById('chatChips');
+
+  var knowledge = [
+    {keywords: ['work', 'working', 'recently', 'doing', 'current', 'now', 'focus', 'learning'],
+      reply: "I'm currently focusing on learning AI fundamentals and building hands-on AI Agent projects. I'm especially interested in how AI Agents can power industrial solutions and enterprise workflows."},
+    {keywords: ['strength', 'good at', 'skill', 'best', 'strong', 'expertise'],
+      reply: "My biggest strength is bridging business requirements with technical architecture. With years of experience as a solution architect, I can translate complex industrial needs into practical, scalable AI-driven systems."},
+    {keywords: ['project', 'agent', 'ai agent', 'build', 'done', 'built', 'production'],
+      reply: "I've been exploring various AI Agent proof-of-concepts across industrial domains, focusing on enterprise AI Agent implementation — covering intelligent process automation, decision-support agents, and multi-agent collaboration."},
+    {keywords: ['who', 'identity', 'about', 'introduce', 'yourself', 'background'],
+      reply: "I'm Eva Liu (刘雯钰), a solution architect passionate about leveraging AI Agents for industrial solutions. My work sits at the intersection of business strategy and technical architecture."},
+    {keywords: ['collaborate', 'contact', 'reach', 'connect', 'hire', 'work with', 'email', 'location', 'shanghai', 'github'],
+      reply: "You can reach Eva at wenyuliuemail@163.com. She's based in Shanghai, China. Check out her portfolio on GitHub: github.com/wenyuliuinfo"},
+    {keywords: ['interest', 'hobby', 'free time', 'like', 'enjoy', 'travel', 'read', 'book'],
+      reply: "Beyond work, I'm passionate about AI trending news, traveling, and reading. I find that exploring new places and ideas helps me bring fresh perspectives to my work."}
+  ];
+
+  var fallbacks = [
+    "That's an interesting question! My digital avatar doesn't have full context for that. Try asking about Eva's recent work, strengths, or AI Agent projects.",
+    "I'm not sure I have the full answer — my knowledge is focused on Eva's professional background. Feel free to try one of the suggested questions above!"
+  ];
+
+  function findReply(query) {
+    var q = query.toLowerCase();
+    var bestScore = 0, bestReply = null;
+    for (var i = 0; i < knowledge.length; i++) {
+      var score = 0;
+      for (var j = 0; j < knowledge[i].keywords.length; j++) {
+        if (q.indexOf(knowledge[i].keywords[j].toLowerCase()) !== -1) score++;
+      }
+      if (score > bestScore) { bestScore = score; bestReply = knowledge[i].reply; }
+    }
+    if (bestScore > 0) return bestReply;
+    return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+  }
+
+  function addMessage(text, isUser) {
+    var div = document.createElement('div');
+    div.className = 'msg ' + (isUser ? 'msg-user' : 'msg-bot');
+    var avatar = document.createElement('div');
+    avatar.className = 'msg-avatar-mini';
+    avatar.textContent = isUser ? 'Y' : 'E';
+    var bubble = document.createElement('div');
+    bubble.className = 'msg-bubble';
+    bubble.textContent = text;
+    div.appendChild(avatar);
+    div.appendChild(bubble);
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return div;
+  }
+
+  function addTyping() {
+    var div = document.createElement('div');
+    div.className = 'msg msg-bot';
+    div.id = 'typingIndicator';
+    var avatar = document.createElement('div');
+    avatar.className = 'msg-avatar-mini';
+    avatar.textContent = 'E';
+    var typing = document.createElement('div');
+    typing.className = 'msg-typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    div.appendChild(avatar);
+    div.appendChild(typing);
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function removeTyping() {
+    var el = document.getElementById('typingIndicator');
+    if (el) el.remove();
+  }
+
+  function sendMessage(text) {
+    if (!text.trim()) return;
+    inputEl.value = '';
+    inputEl.disabled = true;
+    sendBtn.disabled = true;
+    addMessage(text, true);
+    var delay = 600 + Math.random() * 400;
+    addTyping();
+    setTimeout(function() {
+      removeTyping();
+      var reply = findReply(text);
+      addMessage(reply, false);
+      inputEl.disabled = false;
+      sendBtn.disabled = false;
+      inputEl.focus();
+    }, delay);
+  }
+
+  sendBtn.addEventListener('click', function() { sendMessage(inputEl.value); });
+  inputEl.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); sendMessage(inputEl.value); }
+  });
+  chipsEl.addEventListener('click', function(e) {
+    var chip = e.target.closest('.chip');
+    if (!chip) return;
+    var question = chip.dataset.question;
+    if (question) sendMessage(question);
+  });
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) entry.target.style.animationPlayState = 'running';
+    });
+  }, { threshold: 0.1, rootMargin: '-40px' });
+
+  document.querySelectorAll('.animate-fade-in-up, .animate-fade-in').forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+</script>
+
+</body>
+</html>
