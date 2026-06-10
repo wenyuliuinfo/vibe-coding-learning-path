@@ -11,6 +11,7 @@
 - Key Stakeholders: product engineer team lead, development team lead, business operation team lead.
 
 ### 0.2 Revision History
+
 |---|---|---|---|---|
 |Version|Version Status|Updated By|Update Date|Core Updates|
 |1.0.0  |Initial Requirements Draft|2026-06-09|Eva Liu|Initial description of the requirement background, goals, and core values.|
@@ -19,6 +20,7 @@
 - Technical Solution Design Document: [link here]
 
 ### 0.4 Glossary
+
 |---|---|
 |Term|Definition|
 |ASR|Azure Site Recovery Service|
@@ -29,9 +31,9 @@
 This project is aim to build an AI Agent for supporting users' technical requests for Azure Site Recovery service and Azure Migrate Service.
 
 ### 1.2 Core Problem to Solve
-- Target User Profiles: operation engineers, solution architect, new product tryout user.
-- User Scenario: when users having questions, issues, error messages, requests for improvement when they using Azure Site Recovery Service and Azure Migrate.
-- Core Pain Points:
+- **Target User Profiles**: operation engineers, solution architect, new product tryout user.
+- **User Scenario**: when users having questions, issues, error messages, requests for improvement when they using Azure Site Recovery Service and Azure Migrate.
+- **Core Pain Points**:
     1. Long first response time: the current mechanism routes all the user request tickets to backend pool for human support, it takes long time to get the first response.
     2. User request variation: different users have different issues related to different product perspectives.
     3. Low overall system efficiency: the current system has different support engineers handle the same issue from different users, it wastes the resources and time for the same response.
@@ -43,11 +45,11 @@ This project is aim to build an AI Agent for supporting users' technical request
 - Story 3: As a solution architect, I am helping with clients to design a migration strategy from on-prem VMware VM to Azure. I need to know how to design the overall architecture to utilize performance, operation efficiency and cost.
 
 ### 1.4 Project Goals and Value
-- User Value: get faster first time response, improve overall experience, have customized solutions.
-- Business Value: increase user satisfaction rate, increase ticket response efficiency, lower operational cost.
-- Project Goals:
+- **User Value**: get faster first time response, improve overall experience, have customized solutions.
+- **Business Value**: increase user satisfaction rate, increase ticket response efficiency, lower operational cost.
+- **Project Goals**:
   - Specific: After launch, get user first response time improved by 50%. Increase user satisfaction rate by 30%.
-  - Measurable: KPIs:
+  - Measurable - KPIs:
     - Resolution Rate: % of conversations where the AI Agent fully answers the question without human escalation.
     - CSAT (Customer Satisfaction): Post-chat rating 1-5.
     - First Response Time: Time from user message to AI Agent's first response.
@@ -58,10 +60,10 @@ This project is aim to build an AI Agent for supporting users' technical request
   - Time-bound: To be achieved within 3 months after launch.
 
 ### 1.5 Scope
-- In-Scope:
+- **In-Scope**:
     1. User requests simple fundamental question about Azure Site Recovery Service and Azure Migrate.
     2. User requests simple operation related procedures about how to perform certain task using Azure Site Recovery Service and Azure Migrate.
-- Out-of-Scope:
+- **Out-of-Scope**:
     1. User provides an error code or error message after performing certain procedures. User wants to fix this.
     2. User wants to improve functionality that integrates with more than one Azure product.
     3. User wants a better architectural design that utilizes overall performance, functionality, stability, and cost.
@@ -135,15 +137,15 @@ AI Agent gets user question -> AI Agent searches product manual and development 
 - Expected Launch Date: 2026-06-30
 
 ### 4.2 A/B Test Plan
-- Test Objective: Verify whether the new Web Chat can improve the user satisfaction rate.
-- Experiment Groups:
+- **Test Objective**: Verify whether the new Web Chat can improve the user satisfaction rate.
+- **Experiment Groups**:
   - Group A (Control Group): Use the older human support ticket.
   - Group B (Experiment Group): Use the new Web Chat.
-- Traffic Allocation: Group A 50%, Group B 50%
-- Core Metrics:
+- **Traffic Allocation**: Group A 50%, Group B 50%
+- **Core Metrics**:
   - Resolution Rate
   - CSAT (Customer Satisfaction)
   - First Response Time
-- Launch/Rollback Criteria: If Group B significantly outperforms Group A on the core metric and there are no negative indicators, roll out to all users.
+- **Launch/Rollback Criteria**: If Group B significantly outperforms Group A on the core metric and there are no negative indicators, roll out to all users.
 
 
