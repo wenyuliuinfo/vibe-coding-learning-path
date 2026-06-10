@@ -12,7 +12,7 @@
 ### 0.2 Revision History
 | Version | Version Status | Update Date | Updated by | Core Updates |
 |---------|--------|--------|--------|--------|
-| 1.0.0  | Initial Tech Documentation Draft | 2026-06-09 | Eva Liu | Initial Technical Documentation for building Azure ASR Migrate AI Agent. |
+| 1.0.0  | Initial Tech Documentation Draft | 2026-06-10 | Eva Liu | Initial Technical Documentation for building Azure ASR Migrate AI Agent. |
 
 
 ## 1. Data Model
