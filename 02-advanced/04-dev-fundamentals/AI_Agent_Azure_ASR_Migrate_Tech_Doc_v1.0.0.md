@@ -10,10 +10,9 @@
 - Key Stakeholders: product engineer team lead, development team lead, business operation team lead.
 
 ### 0.2 Revision History
-
-|---|---|---|---|---|
-|Version|Version Status|Updated By|Update Date|Core Updates|
-|1.0.0  |Initial Tech Documentation Draft|2026-06-09|Eva Liu|Initial Technical Documentation for building Azure ASR Migrate AI Agent.|
+| Version | Version Status | Updated By | Update Date | Core Updates |
+|---------|--------|--------|--------|--------|
+| 1.0.0  | Initial Tech Documentation Draft | 2026-06-09 | Eva Liu | Initial Technical Documentation for building Azure ASR Migrate AI Agent. |
 
 
 ## 1. Data Model
@@ -58,23 +57,23 @@ Note: For this version technical documentation, there is no need to build anothe
 ### 3.1 Architecture Diagram
 ```mermaid
 graph TD
-    [Web Chat Bot] --> [React Frontend]
-    React Frontend --> [TypeScript Backend Logic]
-    TypeScript Backend --> {Need to Get Previous Tickets}
-    Need to Get Previous Tickets --> |Yes| [PostgreSQL user DB]
-    Need to Get Previous Tickets --> |No| [Pinecone vector DB]
-    PostgreSQL user DB --> [LLM SDK]
-    Pinecone vector DB --> [LLM SDK]
-    LLM SDK --> [End]    
+    A[Web Chat Bot] --> B[React Frontend]
+    B --> C[TypeScript Backend Logic]
+    C --> D{Need to Get Previous Tickets}
+    D --> |Yes| E[PostgreSQL user DB]
+    D --> |No| F[Pinecone vector DB]
+    E --> G[LLM SDK]
+    F --> G[LLM SDK]
+    G --> H[End]
 ```
 
 ### 3.2 Flowchart Diagram
 ```mermaid
 graph TD
-    [User sends request] --> {Need previous ticket information}
-    Need previous ticket information --> |Yes| [Get previous ticket number list]
-    Get previous ticket number list --> [User Choose single ticket number] --> [Return ticket information] --> [End]
-    Need previous ticket information --> |No| [Retrieve data from Vector DB] --> [Send retrieved context to LLM] --> [Get LLM Response] --> [End]
+    A[User sends request] --> B{Need previous ticket information}
+    B --> |Yes| C[Get previous ticket number list]
+    C --> E[User Choose single ticket number] --> F[Return ticket information] --> G[End]
+    B --> |No| D[Retrieve data from Vector DB] --> H[Send retrieved context to LLM] --> I[Get LLM Response] --> G[End]
 ```
 
 
@@ -87,10 +86,10 @@ graph TD
 
 ## 5. Technical Decisions
 ### 5.1 Stack
-- Frontend: React (client-side, calls backend)
-- Backend: TypeScript (Node.js server)
-- Vector DB: Pinecone
-- Relational DB: PostgreSQL (store user data and tickets data)
+- **Frontend**: React (client-side, calls backend)
+- **Backend**: TypeScript (Node.js server)
+- **Vector DB**: Pinecone
+- **Relational DB**: PostgreSQL (store user data and tickets data)
 
 ### 5.2 Database Hosting
-- Relational DB: PostgreSQL (AI has deep understanding, generating accurate data model code)
+- **Relational DB**: PostgreSQL (AI has deep understanding, generating accurate data model code)
