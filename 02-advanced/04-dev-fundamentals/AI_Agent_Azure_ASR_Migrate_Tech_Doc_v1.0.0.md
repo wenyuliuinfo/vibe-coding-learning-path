@@ -10,7 +10,7 @@
 - Key Stakeholders: product engineer team lead, development team lead, business operation team lead.
 
 ### 0.2 Revision History
-| Version | Version Status | Updated By | Update Date | Core Updates |
+| Version | Version Status | Update Date | Updated by | Core Updates |
 |---------|--------|--------|--------|--------|
 | 1.0.0  | Initial Tech Documentation Draft | 2026-06-09 | Eva Liu | Initial Technical Documentation for building Azure ASR Migrate AI Agent. |
 
@@ -62,7 +62,7 @@ graph TD
     C --> D{Need to Get Previous Tickets}
     D --> |Yes| E[PostgreSQL user DB]
     D --> |No| F[Pinecone vector DB]
-    E --> G[LLM SDK]
+    E --> H[End]
     F --> G[LLM SDK]
     G --> H[End]
 ```
