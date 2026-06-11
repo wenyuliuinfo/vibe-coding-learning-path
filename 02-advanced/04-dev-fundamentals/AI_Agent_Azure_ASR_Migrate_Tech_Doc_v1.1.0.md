@@ -124,7 +124,7 @@ flowchart TB
     %% Online query path (event-driven)
     UI -->|1. Connect| WS
     WS -->|WebSocket upgrade| WSS
-    UI -->|2. Send question {event: "query"}| WS
+    UI -->|2. Send question {event:"query"}| WS
     WS --> WSS
     WSS -->|3. Check semantic cache| Cache
     Cache -->|Cache miss| WSS
