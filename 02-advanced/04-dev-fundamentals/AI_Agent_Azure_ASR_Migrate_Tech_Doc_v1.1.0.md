@@ -133,7 +133,7 @@ flowchart TB
     WSS -->|5. Get query embedding| Embedder
     Embedder -->|6. Query vector| PC
     PC -->|7. Top-k chunks| WSS
-    WSS -->|8. Build prompt + chunks + ticket (if any)| OpenAI
+    WSS -->|"8. Build prompt + chunks + ticket (if any)"| OpenAI
     OpenAI -->|9. Stream tokens| WSS
     loop Each token
         WSS -->|"(event:'token', data:...)"| WS
