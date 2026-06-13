@@ -158,11 +158,11 @@ flowchart TB
     classDef backend fill:#fff3e0,stroke:#e65100
     classDef vector fill:#f3e5f5,stroke:#4a148c
     classDef llm fill:#e8f5e9,stroke:#1b5e20
-    class UI, WS frontend
-    class WSS, Cache, RDB, Queue, Worker backend
+    class UI,WS frontend
+    class WSS,Cache,RDB,Queue,Worker backend
     class PC vector
-    class OpenAI, Embedder llm
-    class Docs, Tickets, Chunker ingestion
+    class OpenAI,Embedder llm
+    class Docs,Tickets,Chunker Ingestion
 ```
 
 ### 3.3 User Flowchart Diagram
