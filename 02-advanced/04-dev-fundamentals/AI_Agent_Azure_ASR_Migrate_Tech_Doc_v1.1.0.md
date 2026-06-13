@@ -124,7 +124,7 @@ flowchart TB
     %% Online query path (event-driven)
     UI -->|1. Connect| WS
     WS -->|WebSocket upgrade| WSS
-    UI -->|'2. Send question (event:"query")'| WS
+    UI -->|"2. Send question (event:'query')"| WS
     WS --> WSS
     WSS -->|3. Check semantic cache| Cache
     Cache -->|Cache miss| WSS
@@ -136,10 +136,10 @@ flowchart TB
     WSS -->|8. Build prompt + chunks + ticket (if any)| OpenAI
     OpenAI -->|9. Stream tokens| WSS
     loop Each token
-        WSS -->|'(event:"token", data:...)'| WS
+        WSS -->|"(event:'token', data:...)"| WS
         WS --> UI
     end
-    WSS -->|'10. (event:"done", sources)'| WS
+    WSS -->|"10. (event:'done', sources)"| WS
     WS --> UI
 
     Cache -.->|Cache hit| WSS
