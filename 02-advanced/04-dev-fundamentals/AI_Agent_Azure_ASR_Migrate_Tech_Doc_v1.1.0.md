@@ -134,12 +134,11 @@ flowchart TB
     Embedder -->|6. Query vector| PC
     PC -->|7. Top-k chunks| WSS
     WSS -->|"8. Build prompt + chunks + ticket (if any)"| OpenAI
-    OpenAI -->|9. Stream tokens| WSS
+    OpenAI -->|"9. Stream tokens"| WSS
 
-    loop Each token
-        WSS -->|"(event:'token', data:...)"| WS
-        WS --> UI
-    end
+    WSS -->|"(event:'token', data:...)"| WS
+    WS --> UI
+    WS -.->|repeat for each token| WSS
 
     WSS -->|"10. (event:'done', sources)"| WS
     WS --> UI
