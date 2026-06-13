@@ -154,11 +154,11 @@ flowchart TB
     Queue --> Worker
     Worker -->|Update status| WSS
 
-    class UI, WS frontend
-    class WSS, Cache, RDB, Queue, Worker backend
-    class PC vector
-    class OpenAI, Embedder llm
-    class Docs, Tickets, Chunker ingestion
+    class UI, WS frontend;
+    class WSS, Cache, RDB, Queue, Worker backend;
+    class PC vector;
+    class OpenAI, Embedder llm;
+    class Docs, Tickets, Chunker ingestion;
 ```
 
 ### 3.3 User Flowchart Diagram
