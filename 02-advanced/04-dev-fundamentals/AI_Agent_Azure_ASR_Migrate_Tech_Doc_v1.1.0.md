@@ -135,10 +135,12 @@ flowchart TB
     PC -->|7. Top-k chunks| WSS
     WSS -->|"8. Build prompt + chunks + ticket (if any)"| OpenAI
     OpenAI -->|9. Stream tokens| WSS
+
     loop Each token
         WSS -->|"(event:'token', data:...)"| WS
         WS --> UI
     end
+
     WSS -->|"10. (event:'done', sources)"| WS
     WS --> UI
 
