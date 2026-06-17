@@ -139,28 +139,28 @@ flowchart TB
         UI_Account[Account ID\nstring]
         UI_TicketList[Ticket List\nArray of Ticket objects]
         UI_Query[User Query\nstring]
-        UI_SelectedTicket[Selected Ticket ID\ninteger (optional)]
+        UI_SelectedTicket["Selected Ticket ID\ninteger (optional)"]
         UI_Answer[Streaming Answer\nstring]
         UI_Sources[Sources\nArray of Source objects]
         UI_Feedback[Feedback\nrating + comment]
     end
 
     subgraph Backend["Backend (FastAPI) - Data Models"]
-        API_Request[POST /chat Request\n{account_id, query, ticket_id}]
-        API_Response[SSE Events\n{token} or {done, sources}]
-        API_Tickets[GET /tickets Response\n{tickets: [...]}]
+        API_Request["POST /chat Request\n{account_id, query, ticket_id}"]
+        API_Response["SSE Events\n{token} or {done, sources}"]
+        API_Tickets["GET /tickets Response\n{tickets: [...]}"]
         
-        RDB_Tickets[(PostgreSQL: Tickets Table\n- id (PK)\n- ticket_number\n- account_id\n- subject\n- status\n- resolution\n- created_at\n- updated_at)]
+        RDB_Tickets["(PostgreSQL: Tickets Table\n- id (PK)\n- ticket_number\n- account_id\n- subject\n- status\n- resolution\n- created_at\n- updated_at)"]
         
-        Prompt_Context[Prompt Context\n- system instructions\n- ticket resolution (if any)\n- retrieved chunks\n- user query]
+        Prompt_Context["Prompt Context\n- system instructions\n- ticket resolution (if any)\n- retrieved chunks\n- user query"]
         
-        Embedding_Vector[Embedding Vector\nfloat[]]
+        Embedding_Vector["Embedding Vector\nfloat[]"]
     end
 
     subgraph External["External Services - Data"]
-        Pinecone_Record[(Pinecone: Document Chunks\n- id (UUID)\n- vector (float[])\n- metadata: {account_id,\n  username,\n  source,\n  chunk_index,\n  score})]
+        Pinecone_Record["(Pinecone: Document Chunks\n- id (UUID)\n- vector (float[])\n- metadata: {account_id,\n  username,\n  source,\n  chunk_index,\n  score})"]
         
-        LLM_Response[LLM Response\n- token stream\n- stop signal\n- usage metrics]
+        LLM_Response["LLM Response\n- token stream\n- stop signal\n- usage metrics"]
     end
 
     subgraph Offline["Offline Data Pipeline"]
@@ -168,7 +168,7 @@ flowchart TB
         Doc_Chunks[Document Chunks\n- chunk_id\n- text\n- overlap markers]
         Doc_Embeddings[Chunk Embeddings\n- vector per chunk\n- metadata]
         
-        CRM_Data[(CRM / Ticketing System\n- tickets\n- accounts\n- resolutions)]
+        CRM_Data["(CRM / Ticketing System\n- tickets\n- accounts\n- resolutions)"]
         ETL_Data[ETL Extracted Data\n- new tickets\n- updated tickets]
     end
 
