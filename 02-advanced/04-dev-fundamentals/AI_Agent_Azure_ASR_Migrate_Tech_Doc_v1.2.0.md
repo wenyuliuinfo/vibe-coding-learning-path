@@ -71,7 +71,7 @@ Relationship: One user can have many tickets(one-to-many)
     {"account_id": "1234567", "query": "How do I enable replication for VMware VMs?"}
     ```
   - Response:
-    `text/event-stream (SSE` with `data: token` chunks, ends with `data: [DONE]`
+    `text/event-stream (SSE)` with `data: token` chunks, ends with `data: [DONE]`
 
 
 ## 3. Architecture Diagram
@@ -143,7 +143,7 @@ flowchart TB
     API_Client -->|2. GET /tickets?account_id=XXX| Router
     Router -->|3. Query tickets| RDB
     RDB -->|4. Return ticket list| Router
-    Router -->|5. Response: tickets[]| API_Client
+    Router -->|"5. Response: tickets[]"| API_Client
     API_Client -->|6. Display ticket list| UI
     
     UI -->|7. User submits query + ticket_id| API_Client
