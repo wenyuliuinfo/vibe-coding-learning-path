@@ -14,12 +14,12 @@ The content is organized into a progressive two-part structure, each containing 
 
 ```
 vibe-coding-learning-path/
-    ├── 01-fundamentals/ # Foundational projects for absolute beginners
-    │ └── personal-homepage/ # A personal homepage project (HTML/CSS/JS)
-    ├── 02-advanced/ # More complex projects and concepts
-    │ └── [project-folders]/ # Various advanced projects (details in sub-READMEs)
-    ├── .gitignore
-    └── README.md
+├── 01-fundamentals/        # Foundational projects for absolute beginners
+│ └── personal-homepage/    # A personal homepage project (HTML/CSS/JS)
+├── 02-advanced/            # More complex projects and concepts
+│ └── [project-folders]/    # Various advanced projects (details in sub-READMEs)
+├── .gitignore
+└── README.md
 ```
 ### Fundamentals (`01-fundamentals/`)
 This section is designed for those with little to no prior coding experience. It covers the absolute essentials:
